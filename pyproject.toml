@@ -1,0 +1,20 @@
+[project]
+name = "psplanner"
+version = "0.1.0"
+description = "Generate shareable project plans."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "alembic>=1.15.1",
+    "arrow>=1.3.0",
+    "quart>=0.20.0",
+    "uvicorn>=0.34.0",
+    "quart-session>=3.0.0",
+    "quart-flask-patch>=0.3.0",
+    "flask-sqlalchemy>=3.1.1",
+    "python-dotenv>=1.0.1",
+    "numpy>=2.2.3",
+    "pillow>=11.1.0",
+    "psycopg2>=2.9.10",
+    "redis>=5.2.1",
+]

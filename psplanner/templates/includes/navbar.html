@@ -1,0 +1,85 @@
+<style>
+  #topbar {
+    border-bottom: 3px solid black;
+  }
+
+  #sidebar {
+    background-color: white;
+    color: black;
+    transition: transform 0.2s;
+    width: 350px;
+    position: fixed;
+    left: 0;
+    height: 100%;
+    border-right: 3px solid black;
+  }
+
+  #sidebar a {
+    padding: 1rem 2rem;
+    line-height: 1.75rem;
+    font-size: 1.25rem;
+    list-style-type: none;
+    display: block;
+    border-bottom: 3px solid black;
+    font-weight: bold;
+    color: black;
+  }
+
+  #sidebar.active {
+    transform: translateX(0);
+  }
+
+  #sidebar.inactive {
+    transform: translateX(-350px);
+  }
+</style>
+
+<nav id="topbar" class="navbar">
+  <div class="navbar-brand">
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start">
+      <button id="sidebar-button" class="nb-button navbar-item m-4" onclick="toggleSidebar()">
+        <span id="sidebar-icon" class="inactive">&#9776;</span>
+      </button>
+    </div>
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="field is-grouped">
+          <p class="control">
+            <!-- <a class="is-primary nb-button" href="#login">
+              <span class="icon">
+                <i class="fas fa-sign-in"></i>
+              </span>
+            </a> -->
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<aside id="sidebar" class="inactive">
+  <!-- <div> -->
+    <a href="#">Menu Item 1</a>
+    <a href="#">Menu Item 2</a>
+    <a href="#">Menu Item 3</a>
+  <!-- </div> -->
+</aside>
+
+<script>
+  function toggleSidebar() {
+    const sidebarButton = document.getElementById('sidebar');
+    sidebarButton.classList.toggle('active');
+    sidebarButton.classList.toggle('inactive');
+    const sidebarIcon = document.getElementById('sidebar-icon');
+    sidebarIcon.classList.toggle('inactive');
+    sidebarIcon.classList.toggle('active');
+    if (sidebarButton.classList.contains('inactive')) {
+      sidebarIcon.innerHTML = '&#9776;';
+    } else {
+      sidebarIcon.innerHTML = '&#10006;';
+      
+    }
+  }
+</script>

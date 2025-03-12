@@ -1,0 +1,206 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <section id="hero">
+    <h1><span id="heroLit"></span>Shareable project plans for teams.</h1>
+    <p>
+      Versioned project plans help drive collaboration and can embed into proposals and documentation for any audience.
+    </p>
+    <div id="heroButtons">
+      <a class="nb-button" href="/create">Create a Project</a>
+    </div>
+  </section>
+  <!-- <section id="features">
+    <div id="details">
+      <div class="detail right">
+        <div class="detailInfo">
+          <h4>Project Scoping and Estimations</h4>
+          <p>
+            Ensure alignment with sales, delivery, and customer expectations. Keep your project scoping maintained
+            alongside time estimations, rate information, and calculate AWS funding. A single place to put all of the
+            relevant project scoping data with a standardized checklist of best practices ensures consistency across
+            projects. Ditch clunky spreadsheets and copy/paste operations which are prone to human error and scattered
+            documentation.
+          </p>
+          <p>
+            Ensuring projects are tightly scoped and clearly defined is the start to a solid engagement. When done
+            correctly it holds everyone accountable and in alignment. This will ultimately improve customer
+            satisfaction, keep margin targets consistent, and delivery teams steadily billing.
+          </p>
+          <a class="nb-button">View Demo</a>
+        </div>
+        <div class="detailImage">
+          <img
+            src="https://user-images.githubusercontent.com/7660346/180629352-f92216e3-7cf4-4fba-92fa-089dd96b4478.png" />
+        </div>
+      </div>
+    </div>
+  </section> -->
+  <hr>
+  <footer id="cta">
+    <div class="content">
+      <div id="footerImage">
+        <img src="/static/img/lance.jpg" width=150 style="border-radius: 50%;">
+      </div>
+      <p>
+        I have been working in the AWS consulting space for over a decade in various technical roles; platform, devops,
+        sysops, sre, architect, etc.
+        The most common challenges I have experienced and seen organizations face are:
+      </p>
+      <li>Lack of standard implementations</li>
+      <li>Sprawling tools and systems requiring duplicate, manual data entry</li>
+      <li>Runaway budget overages requiring concessions</li>
+      <li>Missing data about past projects, technologies, solutions, etc</li>
+      <li>Overextended consultants bogged down by context switching</li>
+      <li>Lack of project oversight and reporting</li>
+      <p>
+        All of the above lead to burnout of top performers, frustrated teams, and unhappy customers. This product is my
+        approach to solving these challenges and something I wish I've had throughout the years. It is a culmination of
+        everything I have learned from performing migrations, designing, implementing, and operating hundreds of
+        distributed systems and every flavor of tech stack on AWS.
+      </p>
+      <p>- Lance</p>
+    </div>
+  </footer>
+  <style>
+    body {
+      background-color: #F2F5FF;
+    }
+
+    .bold {
+      font-weight: bold;
+    }
+
+    #loginButton {
+      position: absolute;
+      display: block;
+      top: 0;
+      right: 0;
+      padding-right: .5em;
+    }
+
+    #hero {
+      background: radial-gradient(#9c9c9c80 1px, transparent 0);
+      background-size: 20px 20px;
+      padding-top: 5em;
+      max-width: 100%;
+      margin: auto;
+      font-size: 2.5rem;
+      text-align: center;
+      height: 600px;
+    }
+
+    #hero h1 {
+      width: 80%;
+      margin: auto;
+    }
+
+    #heroLit {
+      background: -webkit-linear-gradient(#F7B801, #CF5C36);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    #hero p {
+      width: 70%;
+      font-size: .5em;
+      margin: auto;
+      padding: 2em 0;
+    }
+
+    #details {
+      margin: 0 auto;
+    }
+
+    .detail {
+      padding: 2em;
+      margin: auto;
+      display: flex;
+      flex-flow: wrap;
+      justify-content: center;
+    }
+
+    .detail h4 {
+      font-size: 2.5em;
+      margin: 1rem 0 1rem 0;
+    }
+
+    .detail p {
+      font-size: 1em;
+    }
+
+    .detailImage img {
+      max-width: 600px;
+      box-shadow: 4px 4px 0 #000;
+      border: 2px solid #000000;
+      border-radius: 4px;
+    }
+
+    .detailInfo {
+      max-width: 600px;
+      margin: 2em 4em;
+    }
+
+    .detailInfo a {
+      display: none;
+    }
+
+    @media (max-width: 800px) {
+      .detailImage img {
+        display: none;
+      }
+
+      .detailInfo {
+        margin: 0 0;
+        padding: 0;
+      }
+
+      .detail {
+        padding: 0;
+      }
+
+      #hero {
+        font-size: 2em;
+        padding-top: 3em;
+        height: 40vh;
+      }
+
+      #hero .nb-button {
+        font-size: .35em;
+      }
+    }
+
+    footer {
+      margin: 5em auto;
+      background-color: #FFEBE7;
+      border: 2px solid black;
+      box-shadow: 4px 4px 0 #000;
+      padding: 2em;
+      max-width: 800px;
+      border-radius: 4px;
+    }
+
+    footer .content {
+      width: 90%;
+      margin: auto;
+    }
+
+    footer img {
+      border: 2px solid white;
+    }
+
+    footer li {
+      list-style: none;
+    }
+
+    footer li:before {
+      content: "> ";
+    }
+
+    #footerImage {
+      text-align: center;
+    }
+  </style>
+
+{% endblock %}

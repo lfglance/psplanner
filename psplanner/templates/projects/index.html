@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+  body {
+    background-color: var(--background);
+  }
+</style>
+
+<div class="container">
+  <section id="project-list">
+    <h1 class="title">Active Projects</h1>
+    {% for project in projects %}
+      {{ project.id }} - {% for role in project.roles %}{{ role.title }}{% endfor %}
+    {% endfor %}
+  </section>
+</div>
+{% endblock %}
+

@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <div id="chart_div"></div>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load('current', { 'packages': ['gantt'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function daysToMilliseconds(days) {
+      return days * 24 * 60 * 60 * 1000;
+    }
+
+    function toMilliseconds(minutes) {
+      return minutes * 60 * 1000;
+    }
+
+    function toWeeks(days) {
+      return daysToMilliseconds(days * 7)
+    }
+
+    function shiftWeeks(weeks) {
+      const date = new Date();
+      const millisecondsInWeek = 7 * 24 * 60 * 60 * 1000;
+      return new Date(date.getTime() + weeks * millisecondsInWeek);
+    }
+
+    function drawChart() {
+
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Task ID');
+      data.addColumn('string', 'Task Name');
+      // data.addColumn('string', 'Resource');
+      data.addColumn('date', 'Start Date');
+      data.addColumn('date', 'End Date');
+      data.addColumn('number', 'Duration');
+      data.addColumn('number', 'Percent Complete');
+      data.addColumn('string', 'Dependencies');
+
+      data.addRows([
+        {% for milestone in project.milestones %}
+          ['{{ milestone.id }}', '{{ milestone.title }}', shiftWeeks({{ milestone.start_week}}), shiftWeeks({{ milestone.start_week + milestone.duration }}), null, 0, null],
+        {% endfor %}
+      ]);
+
+      var options = {
+        height: 275,
+        gantt: {
+          trackHeight: 30,
+          percentEnabled: false,
+          defaultStartDate: new Date(),
+        }
+      };
+
+      var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
+
+      chart.draw(data, options);
+    }
+  </script>
+  <code>
+    {% for milestone in project.milestones %}
+      <h2>{{ milestone.title }}</h2>
+
+      description: {{ milestone.description }}
+      start_week: {{ milestone.start_week }}
+      duration: {{ milestone.duration }}
+      dependent_milestone_id: {{ milestone.dependent_milestone_id }}
+      project_id: {{ milestone.project_id }}
+      project: {{ milestone.project }}
+    {% endfor %}
+
+
+  </code>
+
+{% endblock %}

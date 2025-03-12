@@ -1,0 +1,19 @@
+volumes:
+  postgres:
+services:
+  database:
+    image: postgres:13
+    container_name: psplanner-db
+    ports:
+      - 127.0.0.1:5432:5432
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASS:-psplanner}
+      POSTGRES_USER: ${DB_USER:-psplanner}
+      POSTGRES_DB: ${DB_NAME:-psplanner}
+  cache:
+    image: redis:latest
+    container_name: psplanner-cache
+    ports:
+      - 127.0.0.1:6379:6379

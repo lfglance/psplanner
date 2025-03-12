@@ -1,0 +1,65 @@
+@font-face {
+  font-family: PublicSans;
+  src: url(PublicSans.ttf);
+}
+
+:root {
+  --primary-color: rgb(163,136,238);
+  --primary-color-faded: rgba(163,136,238, .5);
+  --background: rgb(227,223,242);
+  --secondary-black: #1b1b1b;
+  --dark-border: #000;
+  --border-radius: 4px;
+}
+
+* {
+  font: 400;
+  font-family: PublicSans;
+}
+
+.nb {
+  border: 2px solid #000000;
+  box-shadow: 3px 3px 0px #000000;
+}
+
+.nb-button {
+  display: inline-block;
+  border-radius: 4px;
+  padding: 10px 20px;
+  background-color: #fff;
+  color: #000;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  border: 2px solid #000000;
+  box-shadow: 3px 3px 0px #000000;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: box-shadow 0.2s ease, transform 0.1s ease;
+}
+
+.nb-button:hover {
+  box-shadow: 0px 0px 0px #000000;
+  transform: translate(2px, 2px);
+}
+
+.nb-button:focus {
+  outline-color: transparent;
+}
+
+.nb-button.disabled {
+  cursor: not-allowed;
+  box-shadow: 3px 3px 0px #000000;
+  transform: translate(0px, 0px);
+}
+
+.nb-button.alt1 {
+  background-color: #01A7C2;
+}
+
+.nb-button.alt2 {
+  background-color: #88aaee;
+}
