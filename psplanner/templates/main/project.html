@@ -58,19 +58,235 @@
       chart.draw(data, options);
     }
   </script>
-  <code>
-    {% for milestone in project.milestones %}
-      <h2>{{ milestone.title }}</h2>
 
-      description: {{ milestone.description }}
-      start_week: {{ milestone.start_week }}
-      duration: {{ milestone.duration }}
-      dependent_milestone_id: {{ milestone.dependent_milestone_id }}
-      project_id: {{ milestone.project_id }}
-      project: {{ milestone.project }}
-    {% endfor %}
+  <div class="container mt-4">
+    <h1>{{ project.name }}</h1>
+    <p>{{ project.description }}</p>
 
+    <!-- Milestones Section -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h2>Milestones</h2>
+      </div>
+      <div class="card-body">
+        {% for milestone in project.milestones %}
+          <div class="milestone mb-3 p-3 border rounded">
+            <h3>{{ milestone.title }}</h3>
+            <p>{{ milestone.description }}</p>
+            <div class="row">
+              <div class="col-md-3">Start Week: {{ milestone.start_week }}</div>
+              <div class="col-md-3">Duration: {{ milestone.duration }}</div>
+              {% if milestone.dependent_milestone_id %}
+                <div class="col-md-6">Depends on: {{ milestone.dependent_milestone_id }}</div>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
 
-  </code>
+        <!-- Add Milestone Form -->
+        <div class="mt-4">
+          <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#addMilestoneForm">
+            Add New Milestone
+          </button>
+          <div class="collapse mt-3" id="addMilestoneForm">
+            <div class="card card-body">
+              <form action="{{ url_for('main.add_milestone', project_id=project.id) }}" method="POST">
+                <div class="mb-3">
+                  <label for="title" class="form-label">Title</label>
+                  <input type="text" class="form-control" id="title" name="title" required>
+                </div>
+                <div class="mb-3">
+                  <label for="description" class="form-label">Description</label>
+                  <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="start_week" class="form-label">Start Week</label>
+                    <input type="number" class="form-control" id="start_week" name="start_week" min="0" required>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="duration" class="form-label">Duration (weeks)</label>
+                    <input type="number" class="form-control" id="duration" name="duration" min="1" required>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="dependent_milestone_id" class="form-label">Dependent Milestone (optional)</label>
+                  <select class="form-control" id="dependent_milestone_id" name="dependent_milestone_id">
+                    <option value="">None</option>
+                    {% for milestone in project.milestones %}
+                      <option value="{{ milestone.id }}">{{ milestone.title }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-success">Add Milestone</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tasks Section -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h2>Tasks</h2>
+      </div>
+      <div class="card-body">
+        {% for milestone in project.milestones %}
+          <h3>{{ milestone.title }} Tasks</h3>
+          {% if milestone.tasks %}
+            <ul class="list-group mb-3">
+              {% for task in milestone.tasks %}
+                <li class="list-group-item">
+                  <h4>{{ task.title }}</h4>
+                  <p>{{ task.description }}</p>
+                  <div>Estimated Hours: {{ task.hours_estimated }}</div>
+                  <div>Role: {{ task.role.title }}</div>
+                </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p>No tasks for this milestone yet.</p>
+          {% endif %}
+        {% endfor %}
+
+        <!-- Add Task Form -->
+        <div class="mt-4">
+          <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#addTaskForm">
+            Add New Task
+          </button>
+          <div class="collapse mt-3" id="addTaskForm">
+            <div class="card card-body">
+              <form action="{{ url_for('main.add_task') }}" method="POST">
+                <div class="mb-3">
+                  <label for="milestone_id" class="form-label">Milestone</label>
+                  <select class="form-control" id="milestone_id" name="milestone_id" required>
+                    {% for milestone in project.milestones %}
+                      <option value="{{ milestone.id }}">{{ milestone.title }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label for="task_title" class="form-label">Title</label>
+                  <input type="text" class="form-control" id="task_title" name="title" required>
+                </div>
+                <div class="mb-3">
+                  <label for="task_description" class="form-label">Description</label>
+                  <textarea class="form-control" id="task_description" name="description" rows="3" required></textarea>
+                </div>
+                <div class="mb-3">
+                  <label for="hours_estimated" class="form-label">Estimated Hours</label>
+                  <input type="number" class="form-control" id="hours_estimated" name="hours_estimated" min="1" required>
+                </div>
+                <div class="mb-3">
+                  <label for="role_id" class="form-label">Role</label>
+                  <select class="form-control" id="role_id" name="role_id" required>
+                    {% for role in project.roles %}
+                      <option value="{{ role.id }}">{{ role.title }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-success">Add Task</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Acceptance Criteria Section -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h2>Acceptance Criteria</h2>
+      </div>
+      <div class="card-body">
+        {% for milestone in project.milestones %}
+          <h3>{{ milestone.title }} Acceptance Criteria</h3>
+          {% if milestone.criteria %}
+            <ul class="list-group mb-3">
+              {% for criterion in milestone.criteria %}
+                <li class="list-group-item">{{ criterion.description }}</li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p>No acceptance criteria for this milestone yet.</p>
+          {% endif %}
+        {% endfor %}
+
+        <!-- Add Acceptance Criterion Form -->
+        <div class="mt-4">
+          <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#addCriterionForm">
+            Add Acceptance Criterion
+          </button>
+          <div class="collapse mt-3" id="addCriterionForm">
+            <div class="card card-body">
+              <form action="{{ url_for('main.add_criterion') }}" method="POST">
+                <div class="mb-3">
+                  <label for="criterion_milestone_id" class="form-label">Milestone</label>
+                  <select class="form-control" id="criterion_milestone_id" name="milestone_id" required>
+                    {% for milestone in project.milestones %}
+                      <option value="{{ milestone.id }}">{{ milestone.title }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label for="criterion_description" class="form-label">Description</label>
+                  <textarea class="form-control" id="criterion_description" name="description" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-success">Add Criterion</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Assumptions Section -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h2>Assumptions</h2>
+      </div>
+      <div class="card-body">
+        {% for milestone in project.milestones %}
+          <h3>{{ milestone.title }} Assumptions</h3>
+          {% if milestone.assumptions %}
+            <ul class="list-group mb-3">
+              {% for assumption in milestone.assumptions %}
+                <li class="list-group-item">{{ assumption.description }}</li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p>No assumptions for this milestone yet.</p>
+          {% endif %}
+        {% endfor %}
+
+        <!-- Add Assumption Form -->
+        <div class="mt-4">
+          <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#addAssumptionForm">
+            Add Assumption
+          </button>
+          <div class="collapse mt-3" id="addAssumptionForm">
+            <div class="card card-body">
+              <form action="{{ url_for('main.add_assumption') }}" method="POST">
+                <div class="mb-3">
+                  <label for="assumption_milestone_id" class="form-label">Milestone</label>
+                  <select class="form-control" id="assumption_milestone_id" name="milestone_id" required>
+                    {% for milestone in project.milestones %}
+                      <option value="{{ milestone.id }}">{{ milestone.title }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label for="assumption_description" class="form-label">Description</label>
+                  <textarea class="form-control" id="assumption_description" name="description" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-success">Add Assumption</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 {% endblock %}
